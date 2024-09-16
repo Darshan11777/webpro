@@ -19,9 +19,9 @@ body {
   overflow-x: hidden;
   font-style: normal;
 }
-/* html{
+html{
   overflow-x: hidden;
-} */
+}
 h1 {
   font-family: "Lato";
   font-style: normal;
@@ -1953,6 +1953,7 @@ button.message__button {
 .footer__title h3 {
   font-size: 40px;
   font-weight: 700;
+
 }
 
 .footer__title span {
