@@ -15,7 +15,7 @@ export default function HeroSection() {
   const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.1 });
 
   return (
-    <section  ref={ref} className="mb-[100px] header__section bottom__bg__section relative header__bg__section">
+    <section  ref={ref} className=" header__section bottom__bg__section relative header__bg__section">
       <div className='header_img_container'>
         <video 
           src="https://videos.pexels.com/video-files/5057522/5057522-uhd_2560_1440_25fps.mp4" 

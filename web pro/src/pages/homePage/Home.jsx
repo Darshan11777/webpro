@@ -10,7 +10,7 @@ import OurWorkSection from '../../component/OurWorkSection'
 import OurResultSection from '../../component/OurResultSection'
 
 
-import ContactUs from '../../component/ContactUs';
+import ContactUs from '../../component/HomePageComponent/ContactUs.jsx';
 import FooterSection from '../../component/FooterSection';
 import OurClients from '../../component/OurClients.jsx';
 import AccordionSection from '../../component/Accordion/AccordionSection.jsx';
