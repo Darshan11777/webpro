@@ -4,22 +4,22 @@ import Home from './pages/homePage/Home'
 import Navbar from './component/Navbar';
 import AboutUs from './pages/aboutUs/AboutUs';
 import AdminPanel from './pages/adminPanel/AdminPanel';
-import PageTitle from './pages/AdminPanel/src/components/PageTitle';
-import ECommerce from './pages/AdminPanel/src/pages/Dashboard/ECommerce';
-import LoginPage from './pages/AdminPanel/src/pages/Login/Login';
-import RegisterPage from './pages/AdminPanel/src/pages/Register/Register';
-import Calendar from './pages/AdminPanel/src/pages/Calendar';
-import Profile from './pages/AdminPanel/src/pages/Profile';
-import FormElements from './pages/AdminPanel/src/pages/Form/FormElements';
-import FormLayout from './pages/AdminPanel/src/pages/Form/FormLayout';
-import Tables from './pages/AdminPanel/src/pages/Tables';
-import Settings from './pages/AdminPanel/src/pages/Settings';
-import Chart from './pages/AdminPanel/src/pages/Chart';
-import Alerts from './pages/AdminPanel/src/pages/UiElements/Alerts';
-import Buttons from './pages/AdminPanel/src/pages/UiElements/Buttons';
-import SignIn from './pages/AdminPanel/src/pages/Authentication/SignIn';
-import SignUp from './pages/AdminPanel/src/pages/Authentication/SignUp';
-import DefaultLayout from './pages/AdminPanel/src/layout/DefaultLayout';
+import PageTitle from './pages/adminPanel/admin-panel src/components/PageTitle';
+import ECommerce from './pages/adminPanel/admin-panel src/pages/Dashboard/ECommerce';
+import LoginPage from './pages/adminPanel/admin-panel src/pages/Login/Login';
+import RegisterPage from './pages/adminPanel/admin-panel src/pages/Register/Register';
+import Calendar from './pages/adminPanel/admin-panel src/pages/Calendar';
+import Profile from './pages/adminPanel/admin-panel src/pages/Profile';
+import FormElements from './pages/adminPanel/admin-panel src/pages/Form/FormElements';
+import FormLayout from './pages/adminPanel/admin-panel src/pages/Form/FormLayout';
+import Tables from './pages/adminPanel/admin-panel src/pages/Tables';
+import Settings from './pages/adminPanel/admin-panel src/pages/Settings';
+import Chart from './pages/adminPanel/admin-panel src/pages/Chart';
+import Alerts from './pages/adminPanel/admin-panel src/pages/UiElements/Alerts';
+import Buttons from './pages/adminPanel/admin-panel src/pages/UiElements/Buttons';
+import SignIn from './pages/adminPanel/admin-panel src/pages/Authentication/SignIn';
+import SignUp from './pages/adminPanel/admin-panel src/pages/Authentication/SignUp';
+import DefaultLayout from './pages/adminPanel/admin-panel src/layout/DefaultLayout';
 
 export default function App() {
   const location = useLocation();

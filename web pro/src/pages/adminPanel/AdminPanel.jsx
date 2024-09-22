@@ -1,6 +1,6 @@
 import React from 'react';
 
-const  Admin= React.lazy(() => import('./src/App'));
+const  Admin= React.lazy(() => import('./admin-panel src/App'));
 
 const AdminPanel = () => {
   return (
