@@ -16,15 +16,8 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true); // allow requests with no origin
-      const allowedOrigins = ['http://localhost:5173','https://webproreact.netlify.app']; // specify allowed origins
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        return callback(null, true);
-      } else {
-        return callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin:'https://webproreact.netlify.app',
+    // origin: 'http://localhost:5173',
     credentials: true, // allow credentials (cookies)
   })
 );
