@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/homePage/Home'
 import Navbar from './component/Navbar';
 import AboutUs from './pages/aboutUs/AboutUs';
-import AdminPanel from './pages/adminPanel/AdminPanel';
+
 import PageTitle from './pages/adminPanel/admin-panel src/components/PageTitle';
 import ECommerce from './pages/adminPanel/admin-panel src/pages/Dashboard/ECommerce';
 import LoginPage from './pages/adminPanel/admin-panel src/pages/Login/Login';
