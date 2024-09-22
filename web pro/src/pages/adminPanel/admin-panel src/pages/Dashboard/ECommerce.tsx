@@ -18,6 +18,7 @@ const ECommerce = () => {
 
 const navigate=useNavigate()
   const userData=async()=>{
+    console.log( "running");
     try {
       const baseUrl = import.meta.env.VITE_API_BASE_URL; // Assuming you have this defined
       const response = await axios.get(baseUrl + 'admin/user-data',{
