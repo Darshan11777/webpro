@@ -33,16 +33,17 @@ const adminLogin = async (req, res) => {
             const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
             // Set cookie with the JWT
-            // res.cookie('admin', token, {
-            //     httpOnly: true, // Prevent client-side access to the cookie
-            //     secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-            //     maxAge: 3600000, // 1 hour
-            // });
             res.cookie('admin', token, {
-                httpOnly: true,
-                secure: false, 
-                sameSite: 'None',
-              });
+                httpOnly: true, // Prevent client-side access to the cookie
+                secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+                maxAge: 3600000, // 1 hour
+                // sameSite: 'None',
+            });
+            // res.cookie('admin', token, {
+            //     httpOnly: true,
+            //     secure: false, 
+            //     sameSite: 'None',
+            //   });
 
             return res.status(200).json({ message: 'Login successful.', user: { id: user.id, username: user.username },toekn:token });
         });

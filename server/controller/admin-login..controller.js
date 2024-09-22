@@ -60,17 +60,19 @@ const login= async (req, res) => {
       console.log('Generated JWT token:', token);
 
       // Set cookie
-      // res.cookie('token', token, {
-      //   httpOnly: true, // Prevents JavaScript from accessing the cookie
-      //   secure: false, // Set to true if using HTTPS in production
-      //   maxAge: 3600000, // 1 hour
-      //   sameSite: 'lax', // Helps with cross-site cookie issues
-      // });
       res.cookie('token', token, {
-        httpOnly: true,  // Optional, for security
-        secure: true,    // Must be true in production with HTTPS
-        sameSite: 'None' // Required for cross-origin cookies
+        httpOnly: true, // Prevents JavaScript from accessing the cookie
+        secure: false, // Set to true if using HTTPS in production
+        maxAge: 3600000, // 1 hour
+        sameSite: 'lax', // Helps with cross-site cookie issues
       });
+
+      
+      // res.cookie('token', token, {
+      //   httpOnly: true,  // Optional, for security
+      //   secure: true,    // Must be true in production with HTTPS
+      //   sameSite: 'None' // Required for cross-origin cookies
+      // });
       console.log('Response headers:', res.getHeaders());
       // Log cookie details
       console.log('Token sent in cookie:', res.cookies); // Debugging cookies
