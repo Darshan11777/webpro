@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import logo from "../assets/images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"; // Import the arrow right
-import { NavLink } from "react-router-dom"; // Import NavLink
+import { NavLink, useLocation } from "react-router-dom"; // Import NavLink
 
 function Navbar() {
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
