@@ -18,7 +18,7 @@ app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true); // allow requests with no origin
-      const allowedOrigins = ['http://localhost:5173','https://webproreact.netlify.app/']; // specify allowed origins
+      const allowedOrigins = ['http://localhost:5173','https://webproreact.netlify.app']; // specify allowed origins
       if (allowedOrigins.indexOf(origin) !== -1) {
         return callback(null, true);
       } else {
