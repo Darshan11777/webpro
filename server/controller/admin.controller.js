@@ -1,5 +1,5 @@
 // adminController.js
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'; // Import jwt for token generation
 import db from '../database/db.js';
 

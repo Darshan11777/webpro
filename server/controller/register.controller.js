@@ -1,5 +1,5 @@
 import db from '../database/db.js';  // Use '.js' extension for ES modules
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const register =async(req,res)=>{

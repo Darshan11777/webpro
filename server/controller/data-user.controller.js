@@ -1,7 +1,7 @@
 // const db = require('../database/db'); // Database connection
 import db from '../database/db'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 function logLoginAttempt(userId, ipAddress, success, errorMessage = null) {
     const query = `INSERT INTO login_attempts (user_id, ip_address, success, error_message)
                    VALUES (?, ?, ?, ?)`;

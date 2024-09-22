@@ -1,7 +1,7 @@
 import express from 'express'
 import db from '../database/db.js';
 import { adminLogin } from '../controller/admin.controller.js';
-import bcrypt from 'bcrypt'; // Import bcrypt
+import bcrypt from 'bcryptjs'; // Import bcrypt
 import userData from '../controller/user-data.controller.js'
 import authenticateAdmin from '../middleware/authenticateAdmin.js'
 // import { adminLogin } from '../controller/data-user.controller.js';

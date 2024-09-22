@@ -1,7 +1,7 @@
 // backend/routes/items.js
 import express from 'express';
 import db from '../database/db.js';  // Use '.js' extension for ES modules
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import login from '../controller/login-controller.js';
 import register from '../controller/register.controller.js';
