@@ -15,8 +15,8 @@ const authenticateAdmin = (req, res, next) => {
         console.log("err in jwt verify", err); // Debugging output
 
         
-        // return res.redirect('/admin/auth/signin'); // Forbidden
-        return res.sendStatus(403); // Forbidden
+        // return res.redirect('http://localhost:5173/admin/auth'); // Forbidden
+        return res.status(401).json({ message: 'jwt authentication error' });
       }
       console.log("user", user); // Debugging output
       req.user = user;
@@ -25,7 +25,9 @@ const authenticateAdmin = (req, res, next) => {
   } else {
     // res.redirect('/admin/auth/signin');
     console.log('erroe in else')
-    res.sendStatus(401); // Unauthorized
+    // res.redirect('http://localhost:5173/admin/auth');
+    res.status(401).json({ message: 'jwt authentication error' });
+    // res.sendStatus(401); // Unauthorized
   }
 };
 

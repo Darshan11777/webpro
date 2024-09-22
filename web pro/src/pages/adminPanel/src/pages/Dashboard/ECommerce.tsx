@@ -21,15 +21,19 @@ const navigate=useNavigate()
     try {
       const baseUrl = import.meta.env.VITE_API_BASE_URL; // Assuming you have this defined
       const response = await axios.get(baseUrl + 'admin/user-data',{
-        withCredentials: true, // Allows cookies to be sent with the request
-      }); // Replace 'users' with your actual API endpoint
+        withCredentials: true, 
+      }); 
   
       console.log("res:",response)
       return response.data;
     } catch (error) {
+
+      if(error.response.data.message=== "jwt authentication error"){
+        
+        navigate('/admin/auth/signin')
+      }
       // Handle errors appropriately
-      navigate('/admin/auth/signin')
-  console.log('error in fetching data',error)
+  console.log('error in fetching data',error.response.data)
       // throw error; 
     }
   }

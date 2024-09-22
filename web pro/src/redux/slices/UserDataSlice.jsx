@@ -16,8 +16,8 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async() => {
     return response.data;
   } catch (error) {
     // Handle errors appropriately
-    navigate('/admin/auth/signin')
-console.log('error in fetching data',error)
+    // navigate('/admin/auth/signin')
+console.log('error in ytttt data',error)
     // throw error; 
   }
 });
