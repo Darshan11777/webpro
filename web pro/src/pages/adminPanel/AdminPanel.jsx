@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { checkAuth } from "../../redux/slices/AuthSlice";
+import ChangePassword from "./admin-panel src/pages/Form/ChangePassword";
 
 const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
@@ -94,13 +95,13 @@ const AdminPanel = () => {
                 }
               ></Route>
               <Route
-                path="login"
+                path="change-password"
                 element={
                   <>
-                    <PageTitle title="Login Page" />
+                    <PageTitle title="Change Password" />
                     {/* <PageTitle title="Login Page" />
                     <PageTitle title="Login Page" /> */}
-                    <LoginPage />
+                    <ChangePassword/>
                   </>
                 }
               />

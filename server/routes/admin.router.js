@@ -1,6 +1,6 @@
 import express from 'express'
 import db from '../database/db.js';
-import { adminLogin, check_auth,adminLogout } from '../controller/admin.controller.js';
+import { adminLogin, check_auth,adminLogout,change_password } from '../controller/admin.controller.js';
 import bcrypt from 'bcryptjs'; // Import bcrypt
 import userData from '../controller/user-data.controller.js'
 import authenticateAdmin from '../middleware/authenticateAdmin.js'
@@ -44,6 +44,7 @@ router.route('/create').get(async(req, res) => {
   router.route('/user-data').get(authenticateAdmin,userData)
   router.route('/check-auth').get(authenticateAdmin,check_auth)
   router.route('/logout').get(adminLogout)
+  router.route('/change-password').post(authenticateAdmin,change_password)
 
   // router.route('/user-data').get(userData)
 // router.post('/login',login );

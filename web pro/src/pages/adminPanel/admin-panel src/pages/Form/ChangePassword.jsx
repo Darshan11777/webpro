@@ -1,20 +1,19 @@
+
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb'
 import React, { useEffect, useState } from 'react';
 import { Link ,useNavigate} from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import { checkCookie } from '../../../../../redux/slices/CookieSlice';
-import {checkAuth} from '../../../../../redux/slices/AuthSlice'
-const SignIn= () => {
+export default function ChangePassword() {
 
+    
   const dispatch=useDispatch()
   const [message, setMessage] = useState("");
-  const [formData, setFormData] = useState({
-    identifier: '',
-    password: '',
-  })
+//   const [message, setMessage] = useState("");
+
   const login=useSelector(state=>state.auth.isAuthenticated)
 
   // console.log( "login",login);
@@ -22,45 +21,61 @@ const SignIn= () => {
   
 
   useEffect(()=>{
-    if(login){
+    if(!login){
       // ? add if page not  redirect 
-      // navigate('/admin')
+      navigate('/admin')
     }
   },[])
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   // console.log("baseUrl:", baseUrl); // Should log your base URL
-  const handleLogin = async (e) => {
+ 
+
+  const [formdata, setFormData] = useState({password:"",confirmPassword:""});
+//   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(baseUrl + "admin/login", {
-        identifier: formData.identifier,  // This field will be either the username or email
-        password: formData.password,
-      }, {
-        withCredentials: true, // This allows cookies to be sent with the request
-        headers: {
-          'Content-Type': 'application/json',
-        }});
+    if (formdata.password !== formdata.confirmPassword) {
+        setMessage('Passwords do not match');
+    } else {
+        setMessage('');
+      // Handle successful submission (e.g., API call)
 
-        const data=await response.data
-      // console.log( "response",data);
-      setMessage(`Success: ${response.data.message}`);
-      dispatch(checkAuth())
-      navigate('/admin')
-    } catch (error) {
-      setMessage(`Error: ${error.response?.data?.message || "Login failed"}`);
-      
-    }
-  };
-
+      try {
+        const response = await axios.post(baseUrl+'admin/change-password', {
+          
+          newPassword:formdata.password,
+        }, {
+            withCredentials: true, // Required to send cookies
+        }
+        );
   
+        // setMessage(response.data);
+        setMessage("Success: "+response.data);
+        // if(response.ok){
+        //     setMessage("Success "+response.data);
+
+        // }
+      } catch (err) {
+        setMessage(err.response ? err.response.data : 'An error occurred');
+      }
+      console.log('Passwords match!');
+
+
+
+
+    }
+
+
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-  // console.log( "formData",formData);
   return (
     <>
-    { login && <Breadcrumb pageName="Sign In" />}
+    <Breadcrumb pageName="Sign In" />
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
@@ -205,19 +220,19 @@ const SignIn= () => {
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <span className="mb-1.5 block font-medium">Start for free</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to TailAdmin
+               Change Password
               </h2>
 
-              <form onSubmit={handleLogin}>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                  Username or Email
+                 Password
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       placeholder="Enter your usename or email"
-                      name='identifier'
+                      name='password'
                       onChange={handleChange}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -244,13 +259,13 @@ const SignIn= () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Password
+                  Confirm Password
                   </label>
                   <div className="relative">
                     <input
                       type="password"
-                      placeholder="password"
-                      name='password'
+                      placeholder="confirmPassword"
+                      name='confirmPassword'
                       onChange={handleChange}
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -348,7 +363,5 @@ const SignIn= () => {
         </div>
       </div>
     </>
-  );
-};
-
-export default SignIn;
+  )
+}

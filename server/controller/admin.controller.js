@@ -76,4 +76,36 @@ return res.status(200).json({ message: 'Login successful.', user});
     });
     res.status(200).json({ message: 'Logout successful' });
 };
-export { adminLogin,check_auth,adminLogout };
+
+
+const change_password=async(req,res)=>{
+    const {  newPassword } = req.body;
+    
+    const admin=req.user
+    
+        // Fetch the admin from the database
+  db.query('SELECT * FROM admin WHERE id = ?', [admin.id], (err, result) => {
+    if (err || result.length === 0) {
+      return res.status(404).send('User not found');
+    }
+
+    const admin = result[0];
+
+    // Hash the new password
+    bcrypt.hash(newPassword, 10, (hashErr, hashedPassword) => {
+      if (hashErr) {
+        return res.status(500).send('Error hashing password');
+      }
+
+      // Update the password in the database
+      db.query('UPDATE admin SET password = ? WHERE id = ?', [hashedPassword, admin.id], (updateErr) => {
+        if (updateErr) {
+          return res.status(500).send('Error updating password');
+        }
+
+        return res.status(200).send('Password changed successfully');
+      });
+    })});
+     
+}
+export { adminLogin,check_auth,adminLogout ,change_password};
