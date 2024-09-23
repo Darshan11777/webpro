@@ -13,55 +13,10 @@ import axios from 'axios';
 // import { fetchUsers } from '../../../../../redux/slices/UserDataSlice';
 
 const ECommerce = () => {
-  const [loading, setLoading] = useState(true);
-  const { pathname } = useLocation();
 
-const navigate=useNavigate()
-  const userData=async()=>{
-    // console.log( "running");
-    try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL; // Assuming you have this defined
-      const response = await axios.get(baseUrl + 'admin/user-data',{
-        withCredentials: true, 
-      }); 
-  
-      // console.log("res:",response)
-      
-      if(loading){
-        setLoading(false)
-      }
-      return response.data;
-    } catch (error) {
-
-      if(error.response.data.message=== "jwt authentication error"){
-        
-        navigate('/admin/auth/signin')
-      }
-      // Handle errors appropriately
-      if(loading){
-        setLoading(false)
-      }
-  // console.log('error in fetching data',error.response.data)
-      // throw error; 
-    }
-  }
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-const dispatch=useDispatch();
-  useEffect(() => {
-    // setTimeout(() => setLoading(false), 1000);
-    userData();
-    // dispatch(fetchUsers())
-  }, []);
-  // console.log("loading",loading)
-  // console.log( "Name",useSelector(state=>state?.['user-data']?.['users']));
-
-
-// console.log( "welcom to eccomerce");
   return (
 <div>
-   {!loading && <div>
+    
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
           <svg
@@ -159,7 +114,6 @@ const dispatch=useDispatch();
         </div>
         <ChatCard />
       </div>
-      </div>}
       </div>
    
   );
