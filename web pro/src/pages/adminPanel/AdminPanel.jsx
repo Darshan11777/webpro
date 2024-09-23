@@ -26,7 +26,7 @@ const AdminPanel = () => {
     const [loading, setLoading] = useState(true);
     const { pathname } = useLocation();
   const login = useSelector(state=>state.cookie.isLoggedIn)
-  console.log( "login",login);
+//   console.log( "login",login);
   const navigate=useNavigate()
     const userData=async()=>{
       // console.log( "running");
@@ -66,7 +66,7 @@ const AdminPanel = () => {
     useEffect(() => {
         
       // setTimeout(() => setLoading(false), 1000);
-      userData();
+    //   userData();
       // dispatch(fetchUsers())
     }, []);
 

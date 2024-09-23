@@ -21,6 +21,7 @@ const cookieSlice = createSlice({
     },
     checkCookie: (state) => {
       const token = Cookies.get('admin');
+      console.log( "token",token);
       state.token = token || null;
       state.isLoggedIn = !!token; // Update login status based on cookie existence
     },

@@ -15,7 +15,7 @@ const SignIn= () => {
     password: '',
   })
   const login=useSelector(state=>state.cookie.isLoggedIn)
-  console.log( "login",login);
+  // console.log( "login",login);
   const navigate=useNavigate()
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   // console.log("baseUrl:", baseUrl); // Should log your base URL
