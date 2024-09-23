@@ -67,13 +67,18 @@ const authSlice = createSlice({
                 state.error = action.payload;
             })
             // Check authentication status
+            .addCase(checkAuth.pending, (state) => {
+                state.status = 'loading';
+            })
             .addCase(checkAuth.fulfilled, (state, action) => {
                 state.user = action.payload.user;
                 state.isAuthenticated = true;
+                state.status = 'succeeded';
             })
             .addCase(checkAuth.rejected, (state, action) => {
                 state.isAuthenticated = false;
                 state.user = null;
+                state.status = 'failed';
             })
             // Logout action
             .addCase(logout.fulfilled, (state) => {

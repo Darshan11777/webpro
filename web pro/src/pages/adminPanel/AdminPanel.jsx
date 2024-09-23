@@ -1,107 +1,100 @@
-import React, { useEffect, useState } from 'react';
-import Loader from './admin-panel src/common/Loader';
-import DefaultLayout from './admin-panel src/layout/DefaultLayout';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import PageTitle from './admin-panel src/components/PageTitle';
-import ECommerce from './admin-panel src/pages/Dashboard/ECommerce';
-import LoginPage from './admin-panel src/pages/Login/Login';
-import RegisterPage from './admin-panel src/pages/Register/Register';
-import Calendar from './admin-panel src/pages/Calendar';
-import Profile from './admin-panel src/pages/Profile';
-import FormElements from './admin-panel src/pages/Form/FormElements';
-import FormLayout from './admin-panel src/pages/Form/FormLayout';
-import Tables from './admin-panel src/pages/Tables';
-import Settings from './admin-panel src/pages/Settings';
-import Chart from './admin-panel src/pages/Chart';
-import Alerts from './admin-panel src/pages/UiElements/Alerts';
-import Buttons from './admin-panel src/pages/UiElements/Buttons';
-import SignIn from './admin-panel src/pages/Authentication/SignIn';
-import SignUp from './admin-panel src/pages/Authentication/SignUp';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import {checkAuth} from '../../redux/slices/AuthSlice';
+import React, { useEffect, useState } from "react";
+import Loader from "./admin-panel src/common/Loader";
+import DefaultLayout from "./admin-panel src/layout/DefaultLayout";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import PageTitle from "./admin-panel src/components/PageTitle";
+import ECommerce from "./admin-panel src/pages/Dashboard/ECommerce";
+import LoginPage from "./admin-panel src/pages/Login/Login";
+import RegisterPage from "./admin-panel src/pages/Register/Register";
+import Calendar from "./admin-panel src/pages/Calendar";
+import Profile from "./admin-panel src/pages/Profile";
+import FormElements from "./admin-panel src/pages/Form/FormElements";
+import FormLayout from "./admin-panel src/pages/Form/FormLayout";
+import Tables from "./admin-panel src/pages/Tables";
+import Settings from "./admin-panel src/pages/Settings";
+import Chart from "./admin-panel src/pages/Chart";
+import Alerts from "./admin-panel src/pages/UiElements/Alerts";
+import Buttons from "./admin-panel src/pages/UiElements/Buttons";
+import SignIn from "./admin-panel src/pages/Authentication/SignIn";
+import SignUp from "./admin-panel src/pages/Authentication/SignUp";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { checkAuth } from "../../redux/slices/AuthSlice";
 
 const AdminPanel = () => {
-    const [loading, setLoading] = useState(true);
-    const { pathname } = useLocation();
+  const [loading, setLoading] = useState(true);
+  const { pathname } = useLocation();
 
-
-    const dispatch=useDispatch();
-    useEffect(() => {
-        dispatch(checkAuth())
-        console.log("fetthing")
-      // setTimeout(() => setLoading(false), 1000);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(checkAuth());
+    console.log("fetthing");
+    // setTimeout(() => setLoading(false), 1000);
     //   userData();
-                 
 
-
-
-
-    
-      // dispatch(fetchUsers())
-    }, []);
-
-  const login = useSelector(state=>state.auth.isAuthenticated)
-  console.log( "login",login);
-console.log(useSelector(state=>state.auth))
-  const navigate=useNavigate()
-    const userData=async()=>{
-      // console.log( "running");
-      try {
-        const baseUrl = import.meta.env.VITE_API_BASE_URL; // Assuming you have this defined
-        const response = await axios.get(baseUrl + 'admin/user-data',{
-          withCredentials: true, 
-        }); 
-    
-        console.log("res:",response)
-        
-        if(loading){
-          setLoading(false)
-        }
-        return response.data;
-      } catch (error) {
+    // dispatch(fetchUsers())
+  }, [dispatch]);
+  const { isAuthenticated, status } = useSelector((state) => state.auth);
   
-        if(error.response.data.message=== "jwt authentication error"){
-          
-          navigate('/admin/auth/signin')
-        }
-        // Handle errors appropriately
-        
-    // console.log('error in fetching data',error.response.data)
-        // throw error; 
+  console.log("login", isAuthenticated);
+  console.log(useSelector((state) => state.auth));
+  const navigate = useNavigate();
+  const userData = async () => {
+    // console.log( "running");
+    try {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL; // Assuming you have this defined
+      const response = await axios.get(baseUrl + "admin/user-data", {
+        withCredentials: true,
+      });
+
+      console.log("res:", response);
+
+      if (loading) {
+        setLoading(false);
       }
+      return response.data;
+    } catch (error) {
+      if (error.response.data.message === "jwt authentication error") {
+        navigate("/admin/auth/signin");
+      }
+      // Handle errors appropriately
+
+      // console.log('error in fetching data',error.response.data)
+      // throw error;
     }
-    // console.log( "loading",loading);
-    useEffect(() => {
-      window.scrollTo(0, 0);
-     const cookies = Cookies.get('admin');
-            if(!cookies){
-                navigate('/admin/auth/signin')
-            }
-    }, [pathname]);
- 
+  };
+  // console.log( "loading",loading);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // const cookies = Cookies.get("admin");
+    // if (!cookies) {
+    //   navigate("/admin/auth/signin");
+    // }
+  }, [pathname]);
+  if (status === "loading") {
+    return <Loader />; // Show loading state while checking auth
+  }
+
   return (
     <>
-    {!login ? <SignIn/> : <DefaultLayout>
-        <Routes>
-      
-         <Route
-                path="/admin"
-               
-              >
-                <Route index 
-                 element={
+      {!isAuthenticated ? (
+        <SignIn />
+      ) : (
+        <DefaultLayout>
+          <Routes>
+            <Route path="/admin">
+              <Route
+                index
+                element={
                   <>
                     <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                     <ECommerce />
                   </>
                 }
-                >
-      
-                </Route>
+              ></Route>
               <Route
-                path='login'
+                path="login"
                 element={
                   <>
                     <PageTitle title="Login Page" />
@@ -112,7 +105,7 @@ console.log(useSelector(state=>state.auth))
                 }
               />
               <Route
-                path='register'
+                path="register"
                 element={
                   <>
                     <PageTitle title="Login Page" />
@@ -181,7 +174,7 @@ console.log(useSelector(state=>state.auth))
                 element={
                   <>
                     <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                    <Chart  />
+                    <Chart />
                   </>
                 }
               />
@@ -221,10 +214,11 @@ console.log(useSelector(state=>state.auth))
                   </>
                 }
               />
-              </Route>
-        </Routes>
-              </DefaultLayout>}
-              </>
+            </Route>
+          </Routes>
+        </DefaultLayout>
+      )}
+    </>
   );
 };
 export default AdminPanel;

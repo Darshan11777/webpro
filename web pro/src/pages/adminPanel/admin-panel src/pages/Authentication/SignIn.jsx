@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link ,useNavigate} from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
@@ -16,8 +16,16 @@ const SignIn= () => {
     password: '',
   })
   const login=useSelector(state=>state.auth.isAuthenticated)
+
   // console.log( "login",login);
   const navigate=useNavigate()
+  
+
+  useEffect(()=>{
+    if(login){
+      navigate('/admin')
+    }
+  },[])
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   // console.log("baseUrl:", baseUrl); // Should log your base URL
   const handleLogin = async (e) => {
