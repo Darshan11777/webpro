@@ -14,10 +14,29 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+// app.use(
+//   cors({
+//     origin:'https://webproreact.netlify.app',
+//     // origin: 'http://localhost:5173',
+//     credentials: true, // allow credentials (cookies)
+//   })
+// );
+
+const allowedOrigins = [
+  'https://webproreact.netlify.app',
+  'http://localhost:5173'
+];
+
 app.use(
   cors({
-    origin:'https://webproreact.netlify.app',
-    // origin: 'http://localhost:5173',
+    origin: (origin, callback) => {
+      // Check if the origin is in the allowed list
+      if (allowedOrigins.includes(origin) || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true, // allow credentials (cookies)
   })
 );

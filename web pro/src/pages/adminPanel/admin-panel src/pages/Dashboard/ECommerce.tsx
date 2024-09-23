@@ -26,6 +26,10 @@ const navigate=useNavigate()
       }); 
   
       // console.log("res:",response)
+      
+      if(loading){
+        setLoading(false)
+      }
       return response.data;
     } catch (error) {
 
@@ -34,7 +38,10 @@ const navigate=useNavigate()
         navigate('/admin/auth/signin')
       }
       // Handle errors appropriately
-  console.log('error in fetching data',error.response.data)
+      if(loading){
+        setLoading(false)
+      }
+  // console.log('error in fetching data',error.response.data)
       // throw error; 
     }
   }
@@ -43,16 +50,18 @@ const navigate=useNavigate()
   }, [pathname]);
 const dispatch=useDispatch();
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
+    // setTimeout(() => setLoading(false), 1000);
     userData();
     // dispatch(fetchUsers())
   }, []);
+  // console.log("loading",loading)
   // console.log( "Name",useSelector(state=>state?.['user-data']?.['users']));
 
 
 // console.log( "welcom to eccomerce");
   return (
-    <>
+<div>
+   {!loading && <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
           <svg
@@ -150,7 +159,9 @@ const dispatch=useDispatch();
         </div>
         <ChatCard />
       </div>
-    </>
+      </div>}
+      </div>
+   
   );
 };
 
