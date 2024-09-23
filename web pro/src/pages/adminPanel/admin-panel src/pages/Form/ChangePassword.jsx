@@ -38,6 +38,12 @@ export default function ChangePassword() {
     e.preventDefault();
     if (formdata.password !== formdata.confirmPassword) {
         setMessage('Passwords do not match');
+        if(formdata.password.length ==0){
+            
+            setMessage('Please fill password');
+            
+            return
+        } 
     } else {
         setMessage('');
       // Handle successful submission (e.g., API call)
@@ -53,6 +59,7 @@ export default function ChangePassword() {
   
         // setMessage(response.data);
         setMessage("Success: "+response.data);
+        navigate('/admin')
         // if(response.ok){
         //     setMessage("Success "+response.data);
 
