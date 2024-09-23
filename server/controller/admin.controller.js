@@ -59,4 +59,21 @@ const adminLogin = async (req, res) => {
     }
 };
 
-export { adminLogin };
+const check_auth = async(req,res)=>{
+
+const user=req.user
+
+return res.status(200).json({ message: 'Login successful.', user});
+
+
+}
+
+ const adminLogout = (req, res) => {
+    res.clearCookie('admin', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: 'None', 
+    });
+    res.status(200).json({ message: 'Logout successful' });
+};
+export { adminLogin,check_auth,adminLogout };

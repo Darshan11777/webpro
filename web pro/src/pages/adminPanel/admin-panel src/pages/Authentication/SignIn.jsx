@@ -6,6 +6,7 @@ import Logo from '../../images/logo/logo.svg';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import { checkCookie } from '../../../../../redux/slices/CookieSlice';
+import {checkAuth} from '../../../../../redux/slices/AuthSlice'
 const SignIn= () => {
 
   const dispatch=useDispatch()
@@ -14,7 +15,7 @@ const SignIn= () => {
     identifier: '',
     password: '',
   })
-  const login=useSelector(state=>state.cookie.isLoggedIn)
+  const login=useSelector(state=>state.auth.isAuthenticated)
   // console.log( "login",login);
   const navigate=useNavigate()
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -34,7 +35,7 @@ const SignIn= () => {
         const data=await response.data
       // console.log( "response",data);
       setMessage(`Success: ${response.data.message}`);
-      dispatch(checkCookie())
+      dispatch(checkAuth())
       navigate('/admin')
     } catch (error) {
       setMessage(`Error: ${error.response?.data?.message || "Login failed"}`);

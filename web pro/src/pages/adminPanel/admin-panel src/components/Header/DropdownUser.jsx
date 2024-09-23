@@ -5,17 +5,18 @@ import UserOne from '../../images/user/user-01.png';
 import Cookies from 'js-cookie';
 import { checkCookie } from '../../../../../redux/slices/CookieSlice';
 import { useDispatch } from 'react-redux';
+import {logout} from '../../../../../redux/slices/AuthSlice'
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch=useDispatch()
   const navigate=useNavigate()
 const logOut =()=>{
-  let cookies = Cookies.get();
+  // let cookies = Cookies.get();
   // console.log("coockies",cookies);
   
-  Cookies.remove('admin');
-  dispatch(checkCookie())
-  cookies = Cookies.get('admin');
+  // Cookies.remove('admin');
+  dispatch(logout())
+  // cookies = Cookies.get('admin');
   // console.log("coockies",cookies);
   navigate('/admin/auth/signin')
 }

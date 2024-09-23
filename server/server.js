@@ -40,6 +40,7 @@ app.use(
     credentials: true, // allow credentials (cookies)
   })
 );
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use('/api/items', itemRouter);

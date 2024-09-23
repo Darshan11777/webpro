@@ -20,13 +20,14 @@ import SignUp from './admin-panel src/pages/Authentication/SignUp';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
+import {checkAuth} from '../../redux/slices/AuthSlice';
 
 const AdminPanel = () => {
     const [loading, setLoading] = useState(true);
     const { pathname } = useLocation();
-  const login = useSelector(state=>state.cookie.isLoggedIn)
-//   console.log( "login",login);
+  const login = useSelector(state=>state.auth.isAuthenticated)
+  console.log( "login",login);
+console.log(useSelector(state=>state.auth))
   const navigate=useNavigate()
     const userData=async()=>{
       // console.log( "running");
@@ -36,7 +37,7 @@ const AdminPanel = () => {
           withCredentials: true, 
         }); 
     
-        // console.log("res:",response)
+        console.log("res:",response)
         
         if(loading){
           setLoading(false)
@@ -64,9 +65,11 @@ const AdminPanel = () => {
     }, [pathname]);
   const dispatch=useDispatch();
     useEffect(() => {
-        
+        dispatch(checkAuth())
+        console.log("fetthing")
       // setTimeout(() => setLoading(false), 1000);
-    //   userData();
+      userData();
+
       // dispatch(fetchUsers())
     }, []);
 
