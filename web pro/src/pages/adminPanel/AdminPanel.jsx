@@ -25,6 +25,23 @@ import {checkAuth} from '../../redux/slices/AuthSlice';
 const AdminPanel = () => {
     const [loading, setLoading] = useState(true);
     const { pathname } = useLocation();
+
+
+    const dispatch=useDispatch();
+    useEffect(() => {
+        dispatch(checkAuth())
+        console.log("fetthing")
+      // setTimeout(() => setLoading(false), 1000);
+    //   userData();
+                 
+
+
+
+
+    
+      // dispatch(fetchUsers())
+    }, []);
+
   const login = useSelector(state=>state.auth.isAuthenticated)
   console.log( "login",login);
 console.log(useSelector(state=>state.auth))
@@ -63,16 +80,7 @@ console.log(useSelector(state=>state.auth))
                 navigate('/admin/auth/signin')
             }
     }, [pathname]);
-  const dispatch=useDispatch();
-    useEffect(() => {
-        dispatch(checkAuth())
-        console.log("fetthing")
-      // setTimeout(() => setLoading(false), 1000);
-      userData();
-
-      // dispatch(fetchUsers())
-    }, []);
-
+ 
   return (
     <>
     {!login ? <SignIn/> : <DefaultLayout>
