@@ -4,13 +4,18 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux';
+import { checkCookie } from '../../../../../redux/slices/CookieSlice';
 const SignIn= () => {
 
+  const dispatch=useDispatch()
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     identifier: '',
     password: '',
   })
+  const login=useSelector(state=>state.cookie.isLoggedIn)
+  console.log( "login",login);
   const navigate=useNavigate()
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   // console.log("baseUrl:", baseUrl); // Should log your base URL
@@ -29,12 +34,14 @@ const SignIn= () => {
         const data=await response.data
       // console.log( "response",data);
       setMessage(`Success: ${response.data.message}`);
+      dispatch(checkCookie())
       navigate('/admin')
     } catch (error) {
       setMessage(`Error: ${error.response?.data?.message || "Login failed"}`);
       
     }
   };
+
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +50,7 @@ const SignIn= () => {
   // console.log( "formData",formData);
   return (
     <>
-      <Breadcrumb pageName="Sign In" />
+    { login && <Breadcrumb pageName="Sign In" />}
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
@@ -54,7 +61,7 @@ const SignIn= () => {
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
 
-              <p className="2xl:px-20">
+              <p className="">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
                 suspendisse.
               </p>

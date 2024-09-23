@@ -17,7 +17,7 @@ import Alerts from './admin-panel src/pages/UiElements/Alerts';
 import Buttons from './admin-panel src/pages/UiElements/Buttons';
 import SignIn from './admin-panel src/pages/Authentication/SignIn';
 import SignUp from './admin-panel src/pages/Authentication/SignUp';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -25,7 +25,8 @@ import Cookies from 'js-cookie';
 const AdminPanel = () => {
     const [loading, setLoading] = useState(true);
     const { pathname } = useLocation();
-  
+  const login = useSelector(state=>state.cookie.isLoggedIn)
+  console.log( "login",login);
   const navigate=useNavigate()
     const userData=async()=>{
       // console.log( "running");
@@ -48,9 +49,7 @@ const AdminPanel = () => {
           navigate('/admin/auth/signin')
         }
         // Handle errors appropriately
-        if(loading){
-          setLoading(false)
-        }
+        
     // console.log('error in fetching data',error.response.data)
         // throw error; 
       }
@@ -65,6 +64,7 @@ const AdminPanel = () => {
     }, [pathname]);
   const dispatch=useDispatch();
     useEffect(() => {
+        
       // setTimeout(() => setLoading(false), 1000);
       userData();
       // dispatch(fetchUsers())
@@ -72,7 +72,7 @@ const AdminPanel = () => {
 
   return (
     <>
-    {loading ? <Loader/> : <DefaultLayout>
+    {!login ? <SignIn/> : <DefaultLayout>
         <Routes>
       
          <Route

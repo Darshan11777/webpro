@@ -7,10 +7,11 @@
 // 3.create Store.jsx in redux
 import {configureStore} from '@reduxjs/toolkit';
 import UserDataSlice from './slices/UserDataSlice';
+import cookieReducer from './slices/CookieSlice'
 // import counterReducer from "./slices/Slice";
 export const store=configureStore({
     // reducer:{count:counterReducer},
-    reducer:{"user-data":UserDataSlice},
+    reducer:{"user-data":UserDataSlice,"cookie": cookieReducer,},
     devTools:true,
 })
  
