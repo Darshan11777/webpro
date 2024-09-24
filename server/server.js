@@ -11,9 +11,13 @@ import userDatarouter from './routes/user-data.router.js';
 import bodyParser  from 'body-parser';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import  errorMiddleware  from './middleware/error-middleware.js';
 dotenv.config();
 
 const app = express();
+
+console.log(errorMiddleware);
+
 // app.use(
 //   cors({
 //     origin:'https://webproreact.netlify.app',
@@ -26,7 +30,6 @@ const allowedOrigins = [
   'https://webproreact.netlify.app',
   'http://localhost:5173'
 ];
-
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -40,6 +43,8 @@ app.use(
     credentials: true, // allow credentials (cookies)
   })
 );
+
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -73,7 +78,7 @@ app.post('/users', (req, res) => {
     res.json({ message: 'User added successfully!', userId: result.insertId });
   });
 });
-
+app.use(errorMiddleware)
 // Start server
 const PORT = 5000;
 app.listen(PORT, () => {

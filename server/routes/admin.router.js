@@ -4,6 +4,8 @@ import { adminLogin, check_auth,adminLogout,change_password } from '../controlle
 import bcrypt from 'bcryptjs'; // Import bcrypt
 import userData from '../controller/user-data.controller.js'
 import authenticateAdmin from '../middleware/authenticateAdmin.js'
+import {validate} from '../middleware/validate-middleware.js';
+import { adminPasswordChange } from '../validators/auth-validtor.js';
 // import { adminLogin } from '../controller/data-user.controller.js';
 // import authenticateAdmin from '../middleware/authenticateAdmin';
 // import userData from '../controller/user-data.controller';
@@ -44,7 +46,7 @@ router.route('/create').get(async(req, res) => {
   router.route('/user-data').get(authenticateAdmin,userData)
   router.route('/check-auth').get(authenticateAdmin,check_auth)
   router.route('/logout').get(adminLogout)
-  router.route('/change-password').post(authenticateAdmin,change_password)
+  router.route('/change-password').post(authenticateAdmin,validate(adminPasswordChange),change_password)
 
   // router.route('/user-data').get(userData)
 // router.post('/login',login );

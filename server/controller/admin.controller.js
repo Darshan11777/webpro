@@ -79,16 +79,26 @@ return res.status(200).json({ message: 'Login successful.', user});
 
 
 const change_password=async(req,res)=>{
-    const {  newPassword } = req.body;
+    const {  newPassword ,oldPassword} = req.body;
+    
     
     const admin=req.user
     
         // Fetch the admin from the database
-  db.query('SELECT * FROM admin WHERE id = ?', [admin.id], (err, result) => {
+  db.query('SELECT * FROM admin WHERE id = ?', [admin.id],async (err, result) => {
     if (err || result.length === 0) {
       return res.status(404).send('User not found');
     }
-
+ 
+    
+      const checkPassword= await bcrypt.compare(oldPassword, result[0].password)
+        
+        
+        
+    if(!checkPassword){
+      return res.status(404).json('invalid credentials');
+    }
+    
     const admin = result[0];
 
     // Hash the new password
