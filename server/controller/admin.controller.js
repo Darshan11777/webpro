@@ -96,7 +96,7 @@ const change_password=async(req,res)=>{
         
         
     if(!checkPassword){
-      return res.status(404).json('invalid credentials');
+      return res.status(404).json('Old password is incorrect');
     }
     
     const admin = result[0];
