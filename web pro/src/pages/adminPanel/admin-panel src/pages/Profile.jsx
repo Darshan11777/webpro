@@ -1,9 +1,87 @@
+import { useState } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import CoverOne from '../images/cover/cover-01.png';
 import userSix from '../images/user/user-06.png';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUsers } from '../../../../redux/slices/UserDataSlice';
+import {checkAuth} from '../../../../redux/slices/AuthSlice'
 
 const Profile = () => {
+  const user=useSelector(state=>state.auth.user)
+  const profile_img=user?.profile_image
+
+  console.log( "user.auth.user.profile_img",profile_img);
+  const [profileImage, setProfileImage] = useState(profile_img); // Initial image
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+const dispatch=useDispatch()
+//   const handleFileChange = (event) => {
+//     // setSelectedFile(event.target.files[0]);
+   
+//     // const file = event.target.files[0];
+//     // if (file) {
+//     //   const imageUrl = URL.createObjectURL(file);
+//     //   setProfileImage(imageUrl);
+//     // }
+//     const file = e.target.files[0];
+//     if (file) {
+//       const fileType = file.type;
+//     if (fileType.startsWith('image/')) {
+//       setSelectedFile(file);
+//       setErrorMessage(''); // Clear any previous error message
+//     } else {
+//       setSelectedFile(null); // Reset selected file
+//       setErrorMessage('Please select a valid image file.'); // Set error message
+//     }
+//   };
+// }
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const fileType = file.type;
+    const fileExtension = file.name.split('.').pop().toLowerCase(); // Get the file extension
+    // Check if the file type is an image
+    if (   (fileType === 'image/jpeg' || fileType === 'image/jpg' || fileType === 'image/png') &&
+    (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png')) {
+      setProfileImage(URL.createObjectURL(file));
+      setSelectedFile(file);
+      setErrorMessage(''); // Clear any previous error message
+    } else {
+      setProfileImage(null); // Reset selected file
+      setErrorMessage('Please select a valid JPG, JPEG, or PNG image file.'); // Set error message
+    }
+  }
+};
+  const baseUrl=import.meta.env.VITE_API_BASE_URL;
+
+
+  const handleUpload = async () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+      setLoading(true);
+      try {
+        const response = await axios.post(baseUrl+'admin/change-profileImg', formData,{
+          withCredentials: true, // Required to send cookies
+
+      });
+
+      
+      dispatch(checkAuth())
+        console.log('Upload response:', response.data);
+        console.log('Upload response:',response.data.uploadedFiles.imageUrl);
+        // setProfileImage(response.data.uploadedFiles.imageUrl); // Update with the new image path
+      } catch (error) {
+        console.error('Error uploading the file', error);
+      }finally {
+        setLoading(false); // Set loading to false when upload is complete
+      }
+    }
+  };
+  
   return (
     <>
       <Breadcrumb pageName="Profile" />
@@ -20,7 +98,10 @@ const Profile = () => {
               htmlFor="cover"
               className="flex cursor-pointer items-center justify-center gap-2 rounded bg-primary py-1 px-2 text-sm font-medium text-white hover:bg-opacity-90 xsm:px-4"
             >
-              <input type="file" name="cover" id="cover" className="sr-only" />
+              <input type="file" 
+               accept=".jpg,.jpeg,.png,.gif"
+              name="cover" id="cover" className="sr-only" />
+               
               <span>
                 <svg
                   className="fill-current"
@@ -50,14 +131,17 @@ const Profile = () => {
         </div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-            <div className="relative drop-shadow-2">
-              <img src={userSix} alt="profile" />
+            <div className=" drop-shadow-2">
+              <div className="sm:min-h-38 min-h-24">
+
+              <img src={profileImage} className='rounded-full aspect-square object-cover' alt="profile" />
+              </div>
               <label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
               >
                 <svg
-                  className="fill-current"
+                  className="fill-current "
                   width="14"
                   height="14"
                   viewBox="0 0 14 14"
@@ -81,11 +165,16 @@ const Profile = () => {
                   type="file"
                   name="profile"
                   id="profile"
+                  onChange={handleFileChange}
                   className="sr-only"
                 />
               </label>
+               
             </div>
           </div>
+          {errorMessage && <p className="text-red-500 text-[15px]">{errorMessage}</p>} {/* Show error message */}
+           {!errorMessage ? profileImage!== profile_img && <button className= ' mx-auto my-2  flex cursor-pointer items-center justify-center gap-2 rounded bg-primary py-1 px-2 text-sm font-medium text-white hover:bg-opacity-90 xsm:px-4' onClick={handleUpload}> {loading ? 'Uploading...' : 'Upload'}</button> : ""}
+           
           <div className="mt-4">
             <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
               Danish Heilium

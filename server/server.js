@@ -59,7 +59,7 @@ app.use('/admin',adminRouter)
 // })
 
 app.get('/users', (req, res) => {
-  const sql = 'SELECT * FROM users';
+  const sql = 'UPDATE admin SET profile_image = "https://res.cloudinary.com/dbuuc0cdy/image/upload/v1727366080/webpro/xmpv9z6olltfax8caca6.png"';
   db.query(sql, (err, result) => {
     if (err) return res.status(500).send(err);
     res.json(result);

@@ -10,6 +10,7 @@ export const login = createAsyncThunk('admin/login', async (credentials, { rejec
         const response = await axios.post(`${API_URL}/admin/login`, credentials, {
             withCredentials: true, // Required to send cookies
         });
+        
         return response.data; // This will contain user data and token
     } catch (error) {
         return rejectWithValue(error.response.data);
@@ -22,6 +23,7 @@ export const checkAuth = createAsyncThunk('auth/checkAuth', async (_, { rejectWi
         const response = await axios.get(`${API_URL}admin/check-auth`, {
             withCredentials: true, // Ensure cookies are sent
         });
+        console.log( "response.data",response.data);
         return response.data; // Contains authenticated status or user info
     } catch (error) {
         return rejectWithValue(error.response.data);
