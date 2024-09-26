@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
+import {useSelector} from 'react-redux'
 import UserOne from '../../images/user/user-01.png';
 import Cookies from 'js-cookie';
 import { checkCookie } from '../../../../../redux/slices/CookieSlice';
@@ -8,6 +9,9 @@ import { useDispatch } from 'react-redux';
 import {logout} from '../../../../../redux/slices/AuthSlice'
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const user=useSelector(state=>state.auth.user)
+  const profileImg=user?.profile_image
+  // const profileImg=
   const dispatch=useDispatch()
   const navigate=useNavigate()
 const logOut =()=>{
@@ -37,7 +41,7 @@ const logOut =()=>{
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+          <img src={profileImg} className="rounded-full h-full object-cover aspect-square" alt="User" />
         </span>
 
         <svg
