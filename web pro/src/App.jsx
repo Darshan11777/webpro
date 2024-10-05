@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/homePage/Home'
 import Navbar from './component/Navbar';
@@ -20,7 +20,8 @@ import Buttons from './pages/adminPanel/admin-panel src/pages/UiElements/Buttons
 import SignIn from './pages/adminPanel/admin-panel src/pages/Authentication/SignIn';
 import SignUp from './pages/adminPanel/admin-panel src/pages/Authentication/SignUp';
 import DefaultLayout from './pages/adminPanel/admin-panel src/layout/DefaultLayout';
-import AdminPanel from './pages/adminPanel/AdminPanel';
+
+const AdminPanel = lazy(() => import('./pages/adminPanel/AdminPanel'));
 
 export default function App() {
   const location = useLocation();
@@ -33,7 +34,10 @@ export default function App() {
     <div>
       {/* <BrowserRouter></BrowserRouter> */}
 {isAdminPath ? (
-<AdminPanel/>
+  <Suspense fallback={<Loader />}> 
+          <AdminPanel />
+        </Suspense>
+
 ):(
   <>
   <Navbar/>

@@ -3,15 +3,30 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import centerImg from "../assets/images/Ellipse 57 (1).png"
 import useAnimate from '../hooks/useAnimate';
 import OurProgessSectionCard from './OurProgessSectionCard';
+import { getSlides } from './../../../server/controller/data.controller';
 
 export default function OurProgessSection() {
 
+  const [slides, setSlides] = React.useState(null);
+  
 
+  const baseUrl=import.meta.env.VITE_API_BASE_URL
   const targetRef = useRef()
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ['start start', 'center start'],
   });
+  const getSlides=async()=>{
+    const res = await axios.get(baseUrl + "slides/our-process");
+    setSlides(res.data);
+  }
+  useEffect(() => {
+    getSlides()
+  
+   
+  }, [])
+  console.log( "slides",slides);
+  
   let opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   let scale = useTransform(scrollYProgress, [0, 1], [1, 0.5])
   const slideInUp = useAnimate({ animationType: 'slideInUp' });
@@ -21,13 +36,16 @@ export default function OurProgessSection() {
     // ref2.current = element;
   };
   return (
-    <motion.section className="Our__Process__section relative">
+    <motion.section className="Our__Process__section relative" 
+    ref={targetRef}
+    >
     {/* Background image with animation */}
     <motion.div
       className="absolute top-[0%] left-[10px] h-[500px] w-[130px] animate-scaleUpDown"
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1, ease: 'easeOut' }}
+     
     >
       <img src={centerImg} alt="" className="h-full w-full object-cover" />
     </motion.div>
@@ -45,6 +63,7 @@ export default function OurProgessSection() {
         initial={{ opacity: 0, y: 100, scale: 0.8 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 1, ease: 'easeOut' }}
+        style={{opacity,scale}}
       >
         <h5>Our Process</h5>
         <h1>We develop website this <span>“process”</span></h1>

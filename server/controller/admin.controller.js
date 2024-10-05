@@ -81,7 +81,10 @@ db.query("select * from admin where id= ?",[user.id],(err,result)=>{
   if(err){
     res.status(400).json({ message: 'err in Check_auth.', err});
   }
-  const newUser=result[0]
+  if (!result || result.length === 0) {
+    return res.status(404).json({ message: 'User not found.' });
+  }
+  const newUser=result?.[0]
   console.log("new user",newUser)
   const token = jwt.sign({ id: newUser.id, username: newUser.username ,profile_img:newUser.profile_image}, process.env.JWT_SECRET, { expiresIn: '1h' });
   
