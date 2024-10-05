@@ -12,8 +12,6 @@ import bodyParser  from 'body-parser';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import  errorMiddleware  from './middleware/error-middleware.js';
-import slidesRouter from './routes/slides.router.js'
-import imageUploadRouter from './routes/image.router.js'
 dotenv.config();
 
 const app = express();
@@ -53,19 +51,15 @@ app.use(cookieParser());
 app.use('/api/items', itemRouter);
 app.use ('/user',userDatarouter)
 app.use('/admin',adminRouter)
-app.use('/slides',slidesRouter)
-app.use('/image',imageUploadRouter)
 // db.query('select * from item',(err,res)=>{
-//   console.log(err)
+//   console.log(err);
 //   console.log(res);
   
   
 // })
 
 app.get('/users', (req, res) => {
-  const sql = `INSERT INTO our_process (title, description, tags) 
-VALUES ('Research and Discovery', 'Identify who your target audience is, including their needs, pain points, and how your services can address these.', 'Research, Goals, Discovery');
-`;
+  const sql = 'UPDATE admin SET profile_image = "https://res.cloudinary.com/dbuuc0cdy/image/upload/v1727366080/webpro/xmpv9z6olltfax8caca6.png"';
   db.query(sql, (err, result) => {
     if (err) return res.status(500).send(err);
     res.json(result);

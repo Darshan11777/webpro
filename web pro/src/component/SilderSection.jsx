@@ -6,25 +6,10 @@ import CardSection from './CardSection';
 import afterImg from '../assets/images/Group 650.png'
 import centerImg from '../assets/images/Ellipse 57 (1).png'
 
-import axios from 'axios';
-
 
 export default function SilderSection() {
-const [data, setData] = React.useState(null);
-const baseUrl=import.meta.env.VITE_API_BASE_URL;
- 
-  // const data = [1, 2, 3]
-  const getSlides=async ()=>{
-    
-      const res = await axios.get(`${baseUrl}slides/our-service`);
-      console.log( "res.data",res.data);
-      setData(res.data)
-    
-  }
-  useEffect(() => {
-    getSlides()
-  }, [])
-  // console.log( "data && `there is data`",data.length!==0 &&  'there is data ');
+
+  const data = [1, 2, 3]
 
   return (
     <section className="silder_section relative " >
@@ -40,24 +25,8 @@ const baseUrl=import.meta.env.VITE_API_BASE_URL;
         </div>
 
         <div className="cards-container">
-          { data && data.map((item, index) => {
-            return index === 0 ? <CardSection 
-            number={(index+1).toString().padStart(2, '0')} 
-            key={item.id}
-            open={true} 
-            title={item.title} 
-            description={item.description}
-            tags={item.tags}
-            image={item.imgUrl} // Pass the image path here
-          /> : <CardSection 
-          number={(index+1).toString().padStart(2, '0')} 
-          key={item.id}
-          open={false} 
-          title={item.title} 
-          description={item.description}
-           tags={item.tags}
-          image={item.imgUrl} // Pass the image path here
-        />
+          {data.map((item, index) => {
+            return index === 0 ? <CardSection key={index} open={true} /> : <CardSection key={index} />
           })}
         </div>
       </div>

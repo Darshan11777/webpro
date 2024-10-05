@@ -22,13 +22,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { checkAuth } from "../../redux/slices/AuthSlice";
 import ChangePassword from "./admin-panel src/pages/Form/ChangePassword";
-import SlideManager from "./admin-panel src/components/DataManager/our-services section/OurServiceForm";
-import SlidesList from "./admin-panel src/components/DataManager/our-services section/OurService";
-import SlideSelect from "./admin-panel src/components/DataManager/SlideSelect";
-import OurService from "./admin-panel src/components/DataManager/our-services section/OurService";
-import OurServiceForm from "./admin-panel src/components/DataManager/our-services section/OurServiceForm";
-import OurProcess from "./admin-panel src/components/DataManager/our-process section/OurProcess";
-import OurProcessForm from "./admin-panel src/components/DataManager/our-process section/OurProcessForm";
 
 const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
@@ -44,7 +37,7 @@ const AdminPanel = () => {
     // dispatch(fetchUsers())
   }, [dispatch]);
   const { isAuthenticated, status } = useSelector((state) => state.auth);
-
+  
   console.log("login", isAuthenticated);
   console.log(useSelector((state) => state.auth));
   const navigate = useNavigate();
@@ -108,43 +101,10 @@ const AdminPanel = () => {
                     <PageTitle title="Change Password" />
                     {/* <PageTitle title="Login Page" />
                     <PageTitle title="Login Page" /> */}
-                    <ChangePassword />
+                    <ChangePassword/>
                   </>
                 }
               />
-              <Route path="slides">
-                <Route
-                  // path="slide"
-                  index
-                  element={
-                    <>
-                    
-                      <SlideSelect />
-                    </>
-                  }
-                />
-              
-                <Route path="our-service">
-                  <Route index element={<OurService />} />
-                  <Route path="new" element={<OurServiceForm />} />{" "}
-                  {/* Route for adding new slides */}
-                  <Route
-                    path=":slideId/edit"
-                    element={<OurServiceForm />}
-                  />{" "}
-                  {/* Route for editing slides */}
-                </Route>
-                <Route path="our-process">
-                  <Route index element={<OurProcess />} />
-                  <Route path="new" element={<OurProcessForm />} />{" "}
-                  {/* Route for adding new slides */}
-                  <Route
-                    path=":slideId/edit"
-                    element={<OurProcessForm />}
-                  />{" "}
-                  {/* Route for editing slides */}
-                </Route>
-              </Route>
               <Route
                 path="register"
                 element={
